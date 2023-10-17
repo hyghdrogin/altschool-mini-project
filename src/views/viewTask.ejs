@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Tasks</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+  <h1>My Tasks</h1>
+
+  <% if (data.tasks.length > 0) { %>
+    <ul>
+      <% data.tasks.forEach(task => { %>
+        <li>
+          <strong>Title:</strong> <%= task.title %><br>
+          <a href="/tasks/<%= task._id %>">View Task</a>
+        </li>
+      <% }); %>
+    </ul>
+
+    <div>
+      <strong>Total Tasks:</strong> <%= data.total %><br>
+      <strong>Total Pages:</strong> <%= data.totalPages %><br>
+      <strong>Current Page:</strong> <%= data.currentPage %>
+    </div>
+
+    <div>
+      <% if (data.currentPage > 1) { %>
+        <a href="?page=<%= data.currentPage - 1 %>">Previous Page</a>
+      <% } %>
+
+      <% if (data.currentPage < data.totalPages) { %>
+        <a href="?page=<%= data.currentPage + 1 %>">Next Page</a>
+      <% } %>
+    </div>
+  <% } else { %>
+    <p>No tasks available.</p>
+  <% } %>
+
+  <a href="/">Back to Homepage</a>
+</body>
+</html>
