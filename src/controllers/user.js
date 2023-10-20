@@ -22,13 +22,17 @@ const userRegistration = async (req, res) => {
 			});
 		}
 		const hashedPassword = await bcrypt.hash(value.password, 10);
-		await models.User.create({
+		const createdUser = await models.User.create({
 			firstName: value.firstName,
 			lastName: value.lastName,
 			username: value.username,
 			password: hashedPassword
 		});
-		return res.status(201).redirect("/users/login");
+		return res.status(201).json({
+			status: true,
+			message: "User created successfully",
+			data: createdUser
+		});
 	} catch (error) {
 		logger.error(`Error fetching tasks: ${error.message}`);
 		return res.status(500).send({
@@ -62,8 +66,13 @@ const userLogin = async (req, res) => {
 			});
 		}
 		const token = await generateToken({ id: existingUser.id, username: existingUser.username});
+		const user = await models.User.findOne({ username: value.username }).select("-password");
 		res.cookie("token", token, { httpOnly: true });
-		return res.status(201).redirect("/api/dashboard");
+		return res.status(200).json({
+			status: true,
+			message: "User created successfully",
+			data: { token, user }
+		});
 	} catch (error) {
 		logger.error(`Error fetching tasks: ${error.message}`);
 		return res.status(500).send({

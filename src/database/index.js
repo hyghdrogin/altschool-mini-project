@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 require("dotenv/config");
 
 const connect = async () => {
-	mongoose.set("strictQuery", false);
 	const connection = await mongoose.connect(process.env.DATABASE_URL);
 	if (!connection) {
 		console.log("DATABASE connection failed! Exiting Now");

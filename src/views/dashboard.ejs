@@ -2,14 +2,15 @@
 <html>
 <head>
   <title>Welcome to your To Do App Homepage</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
   <h1>Welcome to Your To Do Homepage</h1>
   <p>This is where you handle your to do tasks. You can navigate to the following pages:</p>
   <ul>
     <li><a href="/api/task/create/">Create a task</a></li>
-    <li><a href="/tasks">Get all tasks</a></li>
+    <li><a href="/tasks">Get all pending tasks</a></li>
+    <li><a href="/tasks?status=completed">Get all completed tasks</a></li>
+    <li><a href="/tasks?status=deleted">Get all deleted tasks</a></li>
   </ul>
 </body>
 </html>

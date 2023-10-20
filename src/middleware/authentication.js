@@ -32,7 +32,7 @@ const verifyToken = async (req, res, next) => {
 		}
 
 		if (!token) {
-			return res.status(401).send({
+			return res.status(403).send({
 				status: false,
 				message: "Authorization not found"
 			});
