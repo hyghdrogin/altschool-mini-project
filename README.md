@@ -2,7 +2,7 @@
 This repo is for alt school first semester mini project (To do App)
 
 ## Hosted Link
-Click (here)[https://alt-mini-pro.onrender.com]
+Click [here](https://alt-mini-pro.onrender.com)
 
 ## Documentation
 To run this project:
