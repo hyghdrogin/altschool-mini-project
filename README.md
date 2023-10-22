@@ -4,6 +4,9 @@ This repo is for alt school first semester mini project (To do App)
 ## Hosted Link
 Click [here](https://alt-mini-pro.onrender.com)
 
+## ERD
+Click [here](https://drawsql.app/teams/emmanuel-13/diagrams/to-do-app)
+
 ## Documentation
 To run this project:
 - Clone the project
