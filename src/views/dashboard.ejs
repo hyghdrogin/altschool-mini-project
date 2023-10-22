@@ -4,13 +4,16 @@
   <title>Welcome to your To Do App Homepage</title>
 </head>
 <body>
-  <h1>Welcome to Your To Do Homepage</h1>
+  <h1>Hi, <%= user.username %></h1>
+  <p>Welcome to your To do page</p><br>
+
   <p>This is where you handle your to do tasks. You can navigate to the following pages:</p>
   <ul>
-    <li><a href="/api/task/create/">Create a task</a></li>
+    <li><a href="/tasks/create/">Create a task</a></li>
     <li><a href="/tasks">Get all pending tasks</a></li>
     <li><a href="/tasks?status=completed">Get all completed tasks</a></li>
     <li><a href="/tasks?status=deleted">Get all deleted tasks</a></li>
+    <li><a href="/users/logout">Logout</a></li>
   </ul>
 </body>
 </html>

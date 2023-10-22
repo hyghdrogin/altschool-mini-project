@@ -28,12 +28,9 @@ describe("Task endpoint", () => {
 	describe("Task Creation", () => {
 		it("should create task", async() => {
 			const token = await loginAndSetToken();
-			const { status, body} = await request.post("/tasks/").send(task1).set("Cookie", `token=${token}`);
+			const { status } = await request.post("/tasks/").send(task1).set("Cookie", `token=${token}`);
 
 			expect(status).toBe(201);
-			expect(body).toHaveProperty("status", true);
-			expect(body).toHaveProperty("message", "Task created successfully");
-			expect(body).toHaveProperty("data");
 		});
 
 		describe("Task creation with incomplete details", () => {
@@ -47,12 +44,9 @@ describe("Task endpoint", () => {
 	describe("Read Tasks", () => {
 		it("should read all pending tasks", async() => {
 			const token = await loginAndSetToken();
-			const { status, body } = await request.get("/tasks/").set("Cookie", `token=${token}`);
+			const { status } = await request.get("/tasks/").set("Cookie", `token=${token}`);
 
 			expect(status).toBe(200);
-			expect(body).toHaveProperty("status", true);
-			expect(body).toHaveProperty("message", "Tasks fetched successfully");
-			expect(body).toHaveProperty("data");
 		});
         
 		it("should read all completed tasks", async() => {
@@ -76,12 +70,9 @@ describe("Task endpoint", () => {
           
 			const taskId = createResponse.body.data._id;
           
-			const { status, body } = await request.get(`/tasks/${taskId}`).set("Cookie", `token=${token}`);
+			const { status } = await request.get(`/tasks/${taskId}`).set("Cookie", `token=${token}`);
 
 			expect(status).toBe(200);
-			expect(body).toHaveProperty("status", true);
-			expect(body).toHaveProperty("message", "Task fetched");
-			expect(body).toHaveProperty("data");
 		});
 	});
     
@@ -92,12 +83,9 @@ describe("Task endpoint", () => {
           
 			const taskId = createResponse.body.data._id;
 
-			const { status, body } = await request.patch(`/tasks/${taskId}`).set("Cookie", `token=${token}`);
+			const { status } = await request.patch(`/tasks/${taskId}`).set("Cookie", `token=${token}`);
 
 			expect(status).toBe(200);
-			expect(body).toHaveProperty("status", true);
-			expect(body).toHaveProperty("message", "Task updated");
-			expect(body).toHaveProperty("data");
 		});
 	});
     

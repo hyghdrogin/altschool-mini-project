@@ -3,6 +3,14 @@ const { createTask, readTask, readAllTasks, updateTask, deleteTask } = require("
 
 const router = express.Router();
 
+router.get("/create", (req, res) => {
+	res.render("createTask");
+});
+
+router.get("/update", (req, res) => {
+	res.render("update");
+});
+
 router.post("/", createTask);
 
 router.get("/", readAllTasks);

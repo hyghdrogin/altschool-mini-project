@@ -20,13 +20,10 @@ const createTask = async(req, res) => {
 			description: value.description,
 			user: user.id
 		});
-		return res.status(201).json({
-			status: true,
-			message: "Task created successfully",
-			data: createdTask
-		}); //for jest test
 
-		// return res.status(201).redirect(`/tasks/${createdTask.id}`); //for ejs
+		return res.status(200).render("viewSingle", {
+			task: createdTask, taskId: createdTask.id
+		});
 	} catch (error) {
 		logger.error(`Error fetching tasks: ${error.message}`);
 		return res.status(500).send({
@@ -74,28 +71,13 @@ const readAllTasks = async(req, res) => {
 		
 		const totalPages = Math.ceil(count / limit);
 		const total = tasks.length;
-		
-		return res.status(200).json({
-			status: true,
-			message: "Tasks fetched successfully",
-			data: {
-				total,
-				totalPages,
-				currentPage: page,
-				tasks
-			}
-		}); // for jest test
 
-		// return res.status(200).render("viewTask", {
-		// 	status: true,
-		// 	message: "Tasks fetched successfully",
-		// 	data: {
-		// 		total,
-		// 		totalPages,
-		// 		currentPage: page,
-		// 		tasks
-		// 	}
-		// }); // for ejs
+		return res.status(200).render("viewTask", {
+			total,
+			totalPages,
+			currentPage: page,
+			tasks
+		});
 	} catch (error) {
 		logger.error(`Error fetching tasks: ${error.message}`);
 		return res.status(500).send({
@@ -126,16 +108,10 @@ const readTask = async (req, res) => {
 				message: "No content"
 			});
 		}
-
-		return res.status(200).json({
-			status: true,
-			message: "Task fetched",
-			data: task
-		}); // for jest test
 		
-		// return res.status(200).render("viewSingle", {
-		// taskId, task
-		// }); // for ejs
+		return res.status(200).render("viewSingle", {
+			taskId, task
+		});
 
 	} catch (error) {
 		logger.error(`Error fetching tasks: ${error.message}`);

@@ -6,7 +6,6 @@ const logger = require("../utils/logger.js");
 
 const userRegistration = async (req, res) => {
 	try {
-		console.log(req.body);
 		const { error, value } = validateUser(req.body);
 		if(error) {
 			return res.status(400).send({
@@ -22,17 +21,14 @@ const userRegistration = async (req, res) => {
 			});
 		}
 		const hashedPassword = await bcrypt.hash(value.password, 10);
-		const createdUser = await models.User.create({
+		await models.User.create({
 			firstName: value.firstName,
 			lastName: value.lastName,
 			username: value.username,
 			password: hashedPassword
 		});
-		return res.status(201).json({
-			status: true,
-			message: "User created successfully",
-			data: createdUser
-		});
+
+		return res.status(201).render("login");
 	} catch (error) {
 		logger.error(`Error fetching tasks: ${error.message}`);
 		return res.status(500).send({
@@ -68,11 +64,23 @@ const userLogin = async (req, res) => {
 		const token = await generateToken({ id: existingUser.id, username: existingUser.username});
 		const user = await models.User.findOne({ username: value.username }).select("-password");
 		res.cookie("token", token, { httpOnly: true });
-		return res.status(200).json({
-			status: true,
-			message: "User created successfully",
-			data: { token, user }
+
+		return res.status(200).render("dashboard", ({
+			user, token
+		}));
+	} catch (error) {
+		logger.error(`Error fetching tasks: ${error.message}`);
+		return res.status(500).send({
+			status: false,
+			message: "Internal server error"
 		});
+	}
+};
+
+const logOut = async (req, res) => {
+	try {
+		res.clearCookie("token");
+		return res.status(440).render("login");
 	} catch (error) {
 		logger.error(`Error fetching tasks: ${error.message}`);
 		return res.status(500).send({
@@ -83,5 +91,5 @@ const userLogin = async (req, res) => {
 };
 
 module.exports = {
-	userRegistration, userLogin
+	userRegistration, userLogin, logOut
 };

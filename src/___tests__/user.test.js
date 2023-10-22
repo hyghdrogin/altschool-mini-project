@@ -20,12 +20,9 @@ describe("User endpoint", () => {
 	
 	describe("User Registration", () => {
 		it("should create user", async() => {
-			const { status, body } = await request.post("/users/").send(user1);
+			const { status } = await request.post("/users/").send(user1);
 
 			expect(status).toBe(201);
-			expect(body).toHaveProperty("status", true);
-			expect(body).toHaveProperty("message", "User created successfully");
-			expect(body).toHaveProperty("data");
 		});
 
 		describe("User Registration with incomplete details", () => {
@@ -42,11 +39,9 @@ describe("User endpoint", () => {
 	});
 	describe("User Login", () => {
 		it("should login user", async() => {
-			const { status, body } = await request.post("/users/login").send(user4);
+			const { status } = await request.post("/users/login").send(user4);
 
 			expect(status).toBe(200);
-			expect(body).toHaveProperty("status", true);
-			expect(body).toHaveProperty("message", "User created successfully");
 
 		});
 
@@ -72,6 +67,13 @@ describe("User endpoint", () => {
 
 				expect(status).toBe(404);
 			});
+		});
+	});
+	describe("User Logout", () => {
+		it("should log user out with response 440", async () => {
+			const {status} = await request.get("/users/logout").send(user4);
+
+			expect(status).toBe(440);
 		});
 	});
 });

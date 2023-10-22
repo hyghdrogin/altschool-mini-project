@@ -21,18 +21,11 @@ const createServer = () => {
 	app.use("/", router);
 
 	app.get("/", (req, res) => {
-		// res.clearCookie("token");
-		// res.render("homepage");
-		return res.status(200).send({
-			status: true,
-			message: "Welcome to To do App"
-		});
+		res.clearCookie("token");
+		return res.status(200).render("homepage");
 	});
 	
-	app.use((req, res) => res.status(404).json({
-		status: false,
-		message: "Invalid route"
-	}));
+	app.use((req, res) => res.status(404).render("404"));
 
 	return app;
 };
