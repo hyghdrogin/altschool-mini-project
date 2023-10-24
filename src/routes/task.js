@@ -1,5 +1,5 @@
 const express = require("express");
-const { createTask, readTask, readAllTasks, updateTask, deleteTask } = require("../controllers/task.js");
+const { createTask, readTask, readAllTasks, updateTask, deleteTask, updatePrefill } = require("../controllers/task.js");
 
 const router = express.Router();
 
@@ -7,17 +7,17 @@ router.get("/create", (req, res) => {
 	res.render("createTask");
 });
 
-router.get("/update", (req, res) => {
-	res.render("update");
-});
+router.get("/update/:taskId", updatePrefill);
 
 router.post("/", createTask);
 
 router.get("/", readAllTasks);
 router.get("/:taskId", readTask);
 
-router.patch("/:taskId", updateTask);
+//This route should be a put or path request but due to ejs restrictions, I will be using post
+router.post("/:taskId", updateTask);
 
-router.delete("/:taskId", deleteTask);
+//This route should be a delete request but due to ejs restrictions, I will be using get
+router.get("/delete/:taskId", deleteTask);
 
 module.exports = router;

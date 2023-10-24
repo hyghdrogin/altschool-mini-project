@@ -3,6 +3,7 @@ const cors = require("cors");
 const path = require("path");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const methodOverride = require("method-override");
 const router = require("../routes/index.js");
 const requestLogger = require("../middleware/requestLogger.js");
 
@@ -14,6 +15,7 @@ const createServer = () => {
 
 	app.use(cors());
 	app.use(cookieParser());
+	app.use(methodOverride("_method"));
 	app.use(bodyParser.urlencoded({ extended: true }));
 	app.use(bodyParser.json());
 	app.use(requestLogger);

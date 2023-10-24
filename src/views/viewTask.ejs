@@ -1,40 +1,43 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>My Tasks</title>
 </head>
+
 <body>
   <h1>My Tasks</h1>
 
   <% if (tasks.length > 0) { %>
-    <ul>
-      <% tasks.forEach(task => { %>
-        <li>
-          <strong>Title:</strong> <%= task.title %><br>
-          <a href="/tasks/<%= task._id %>">View Task</a>
-        </li>
-      <% }); %>
-    </ul>
+  <ul>
+    <% tasks.forEach(task => { %>
+    <li>
+      <strong>Title:</strong> <%= task.title %><br>
+      <a href="/tasks/<%= task._id %>">View Task</a>
+    </li>
+    <% }); %>
+  </ul>
 
-    <div>
-      <strong>Total Tasks:</strong> <%= total %><br>
-      <strong>Total Pages:</strong> <%= totalPages %><br>
-      <strong>Current Page:</strong> <%= currentPage %>
-    </div>
+  <div>
+    <strong>Total Tasks:</strong> <%= total %><br>
+    <strong>Total Pages:</strong> <%= totalPages %><br>
+    <strong>Current Page:</strong> <%= currentPage %>
+  </div>
 
-    <div>
-      <% if (currentPage > 1) { %>
-        <a href="?page=<%= currentPage - 1 %>">Previous Page</a>
-      <% } %>
+  <div>
+    <% if (currentPage > 1) { %>
+    <a href="?page=<%= currentPage - 1 %>">Previous Page</a>
+    <% } %>
 
-      <% if (currentPage < totalPages) { %>
-        <a href="?page=<%= currentPage + 1 %>">Next Page</a>
-      <% } %>
-    </div>
+    <% if (currentPage < totalPages) { %>
+    <a href="?page=<%= currentPage + 1 %>">Next Page</a>
+    <% } %>
+  </div>
   <% } else { %>
-    <p>No tasks available.</p>
+  <p>No tasks available.</p>
   <% } %>
 
   <a href="/">Back to Homepage</a>
 </body>
+
 </html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" , content="width=device-width" , initial-scale="1.0">
+  <title>View Task</title>
+  <link rel="stylesheet" , href="styles.css">
+</head>
+
+<body>
+  <h1>Update Task</h1>
+  <p>Task ID: <%= taskId %></p>
+
+  <form method="POST" action="/tasks/<%= task._id %>">
+    <input type="hidden" name="_method" value="patch">
+    <label for="title">Edit Title:</label>
+    <input type="text" id="title" name="title" value="<%= task.title %>"><br>
+
+    <label for="description">Edit Description:</label>
+    <textarea id="description" name="description" rows="5"><%= task.description %></textarea><br>
+
+    <label for="status">Edit Status:</label>
+    <select id="status" name="status" required>
+      <option value="pending" <%= task.status === 'pending' ? 'selected' : '' %>>Pending</option>
+      <option value="completed" <%= task.status === 'completed' ? 'selected' : '' %>>Completed</option>
+    </select><br>
+
+    <button type="submit" formmethod="post">Update Task</button>
+  </form>
+
+  <a href="/tasks">Back to Tasks</a>
+  <a href="/tasks/<%= taskId %>">Go Back</a>
+</body>
+
+</html>

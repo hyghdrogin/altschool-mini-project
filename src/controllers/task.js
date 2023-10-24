@@ -151,10 +151,42 @@ const updateTask = async (req, res) => {
 
 		const updatedTask = await models.Task.findByIdAndUpdate(taskId, updateObject, { new: true });
 
-		return res.status(200).json({
-			status: true,
-			message: "Task updated",
-			data: updatedTask
+		return res.status(200).render("viewSingle", {
+			taskId, task: updatedTask
+		});
+	} catch (error) {
+		logger.error(`Error updating task: ${error.message}`);
+		return res.status(500).send({
+			status: false,
+			message: "Internal server error"
+		});
+	}
+};
+
+const updatePrefill = async(req, res) => {
+	const { username } = req.user;
+	const { taskId } = req.params;
+
+	try {
+		const user = await models.User.findOne({ username });
+		const task = await models.Task.findOne({ _id: taskId, user: user.id });
+
+		if (!task) {
+			return res.status(404).send({
+				status: false,
+				message: "Task not found"
+			});
+		}
+
+		if (task.status === "deleted") {
+			return res.status(204).send({
+				status: true,
+				message: "No content"
+			});
+		}
+
+		return res.status(200).render("update",{
+			taskId, task
 		});
 	} catch (error) {
 		logger.error(`Error updating task: ${error.message}`);
@@ -188,11 +220,7 @@ const deleteTask = async (req, res) => {
 		}
   
 		await models.Task.findByIdAndUpdate(taskId, { status: "deleted" }, { upsert: true });
-  
-		return res.status(204).json({
-			status: true,
-			message: "Task deleted successfully"
-		});
+		return res.status(204).redirect("/tasks");
 	} catch (error) {
 		logger.error(`Error fetching tasks: ${error.message}`);
 		return res.status(500).send({
@@ -204,5 +232,5 @@ const deleteTask = async (req, res) => {
   
 
 module.exports = {
-	createTask, readTask, readAllTasks, updateTask, deleteTask
+	createTask, readTask, readAllTasks, updateTask, updatePrefill, deleteTask
 };

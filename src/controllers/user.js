@@ -64,7 +64,6 @@ const userLogin = async (req, res) => {
 		const token = await generateToken({ id: existingUser.id, username: existingUser.username});
 		const user = await models.User.findOne({ username: value.username }).select("-password");
 		res.cookie("token", token, { httpOnly: true });
-
 		return res.status(200).render("dashboard", ({
 			user, token
 		}));

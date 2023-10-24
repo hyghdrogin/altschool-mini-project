@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>View Task</title>
 </head>
+
 <body>
   <h1>View Task</h1>
   <p>Task ID: <%= taskId %></p>
@@ -11,7 +13,13 @@
     <p>Description: <%= task.description %></p>
     <p>Status: <%= task.status %></p>
   </div>
-  
+
   <a href="/tasks">Back to Tasks</a>
+  <a href="/tasks/update/<%= taskId %>">Update Task</a>
+  <form method="get" action="/tasks/delete/<%= task._id %>" onsubmit="return confirm('Are you sure you want to delete this task?')">
+    <button type="submit" formmethod="get">Delete Task</button>
+  </form>
+
 </body>
+
 </html>
