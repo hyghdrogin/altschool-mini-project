@@ -22,15 +22,13 @@ const userRegistration = async (req, res) => {
 		}
 		const hashedPassword = await bcrypt.hash(value.password, 10);
 		await models.User.create({
-			firstName: value.firstName,
-			lastName: value.lastName,
 			username: value.username,
 			password: hashedPassword
 		});
 
 		return res.status(201).render("login");
 	} catch (error) {
-		logger.error(`Error fetching tasks: ${error.message}`);
+		logger.error(`Error creating user: ${error.message}`);
 		return res.status(500).send({
 			status: false,
 			message: "Internal server error"
@@ -68,7 +66,7 @@ const userLogin = async (req, res) => {
 			user, token
 		}));
 	} catch (error) {
-		logger.error(`Error fetching tasks: ${error.message}`);
+		logger.error(`Error logging in user: ${error.message}`);
 		return res.status(500).send({
 			status: false,
 			message: "Internal server error"
@@ -81,7 +79,7 @@ const logOut = async (req, res) => {
 		res.clearCookie("token");
 		return res.status(440).render("login");
 	} catch (error) {
-		logger.error(`Error fetching tasks: ${error.message}`);
+		logger.error(`Error logging out: ${error.message}`);
 		return res.status(500).send({
 			status: false,
 			message: "Internal server error"

@@ -13,6 +13,7 @@
     <% tasks.forEach(task => { %>
     <li>
       <strong>Title:</strong> <%= task.title %><br>
+      <strong>Status:</strong> <%= task.status %><br>
       <a href="/tasks/<%= task._id %>">View Task</a>
     </li>
     <% }); %>

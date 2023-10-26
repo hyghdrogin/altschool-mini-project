@@ -33,50 +33,49 @@ const createTask = async(req, res) => {
 	}
 };
 
-const readAllTasks = async(req, res) => {
+const readAllTasks = async (req, res) => {
 	const { username } = req.user;
 	let { page, limit, status } = req.query;
-	
+  
 	try {
 		const user = await models.User.findOne({ username });
 		page = page || 1;
 		limit = limit || 10;
-		
+  
 		const startIndex = (page - 1) * limit;
 		const endIndex = page * limit;
-		
-		let query = { status: "pending", user: user.id };
-
+  
+		let query = { user: user._id };
+  
 		if (status) {
-			if (status === "deleted") {
-				query.status = "deleted";
-			} else if (status === "completed") {
-				query.status = "completed";
+			if (status === "deleted" || status === "completed" || status === "pending") {
+				query.status = status;
+			} else {
+				delete query.status;
 			}
 		}
-
+  
 		const tasks = await models.Task.find(query)
 			.limit(endIndex)
 			.skip(startIndex)
 			.exec();
-		
-		if (tasks.length < 1) {
-			return res.status(204).send({
+  
+		if (tasks.length === 0) {
+			return res.status(204).json({
 				status: true,
-				message: "No content"
+				message: "No data",
 			});
 		}
-		
+  
 		const count = await models.Task.countDocuments(query);
-		
+  
 		const totalPages = Math.ceil(count / limit);
-		const total = tasks.length;
-
-		return res.status(200).render("viewTask", {
-			total,
+  
+		return res.status(200).render("viewSingle", {
+			total: tasks.length,
 			totalPages,
 			currentPage: page,
-			tasks
+			tasks,
 		});
 	} catch (error) {
 		logger.error(`Error fetching tasks: ${error.message}`);
@@ -169,7 +168,7 @@ const updatePrefill = async(req, res) => {
 
 	try {
 		const user = await models.User.findOne({ username });
-		const task = await models.Task.findOne({ _id: taskId, user: user.id });
+		const task = await models.Task.findOne({ _id: taskId, user: user.id }).lean();
 
 		if (!task) {
 			return res.status(404).send({
