@@ -71,7 +71,7 @@ const readAllTasks = async (req, res) => {
   
 		const totalPages = Math.ceil(count / limit);
   
-		return res.status(200).render("viewSingle", {
+		return res.status(200).render("viewTask", {
 			total: tasks.length,
 			totalPages,
 			currentPage: page,
