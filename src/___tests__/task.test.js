@@ -68,7 +68,7 @@ describe("Task endpoint", () => {
 			const token = await loginAndSetToken();
 			const createResponse = await request.post("/tasks").send(task3).set("Cookie", `token=${token}`);
           
-			const taskId = createResponse.body.data._id;
+			const taskId = createResponse.body.task._id;
           
 			const { status } = await request.get(`/tasks/${taskId}`).set("Cookie", `token=${token}`);
 
@@ -81,7 +81,7 @@ describe("Task endpoint", () => {
 			const token = await loginAndSetToken();
 			const createResponse = await request.post("/tasks").send(task4).set("Cookie", `token=${token}`);
           
-			const taskId = createResponse.body.data._id;
+			const taskId = createResponse.body.task._id;
 
 			const { status } = await request.patch(`/tasks/${taskId}`).set("Cookie", `token=${token}`);
 
@@ -94,7 +94,7 @@ describe("Task endpoint", () => {
 			const token = await loginAndSetToken();
 			const createResponse = await request.post("/tasks").send(task5).set("Cookie", `token=${token}`);
           
-			const taskId = createResponse.body.data._id;
+			const taskId = createResponse.body.task._id;
 
 			const { status } = await request.delete(`/tasks/${taskId}`).set("Cookie", `token=${token}`);
 

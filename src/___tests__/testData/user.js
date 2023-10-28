@@ -18,7 +18,7 @@ const user4 = {
 };
 
 const user5 = {
-	username: "frosh",
+	username: "froshgee",
 	password: "password"
 };
 
